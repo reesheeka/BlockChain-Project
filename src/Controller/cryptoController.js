@@ -20,9 +20,11 @@ const getCrypto = async function (req, res) {
 
         await cryptoModel.deleteMany()
 
-        let saveData = await cryptoModel.create(sortData)
+        await cryptoModel.create(sortData)
 
-        return res.status(200).send({ status: true, data: saveData });
+        let getData = await cryptoModel.find().select({__v:0, _id:0})
+
+        return res.status(200).send({ status: true, data: getData });
     }
     catch (error) {
         return res.status(500).send({ status: false, message: error.message });
